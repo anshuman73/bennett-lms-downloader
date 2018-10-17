@@ -31,7 +31,7 @@ if login_history_length == 2:
 
 	for course_name, course_link in courses.items():
 		print(f'\n\n\nProcessing the course "{course_name}":\n\n')
-		course_path = os.path.join(local_path, course_name)
+		course_path = os.path.join(local_path, course_name.replace(':', ''))
 		if not os.path.exists(course_path):
 			os.makedirs(course_path)
 

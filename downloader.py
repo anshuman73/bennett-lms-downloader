@@ -15,7 +15,7 @@ login_history = login_request.history
 login_history_length = len(login_history)
 
 if login_history_length == 2:
-	local_path = os.getcwd() + '/' + 'Bennett LMS Data' + '/'
+	local_path = os.path.join(os.getcwd(), 'Bennett LMS Data')
 	if not os.path.exists(local_path):
 		os.makedirs(local_path)
 	r = request_session.get('http://lms.bennett.edu.in/my/')
@@ -31,7 +31,7 @@ if login_history_length == 2:
 
 	for course_name, course_link in courses.items():
 		print(f'\n\n\nProcessing the course "{course_name}":\n\n')
-		course_path = local_path + course_name + '/'
+		course_path = os.path.join(local_path, course_name)
 		if not os.path.exists(course_path):
 			os.makedirs(course_path)
 
@@ -49,15 +49,16 @@ if login_history_length == 2:
 				count += 1
 				print('File ' + str(count) + ' not downloadable, skipping...')
 				continue
-			if os.path.exists(course_path + file_name):
-				local_size = os.path.getsize(course_path + file_name)
+			file_path = os.path.join(course_path, file_name)
+			if os.path.exists(file_path):
+				local_size = os.path.getsize(file_path)
 				if online_size == local_size:
 					print('File ' + str(count + 1) + ' of ' + str(len(resources)) + ' "' + file_name + '" already exists, skipping...')
 					count += 1
 					continue
 			print('\nDownloading File ' + str(count + 1) + ' of ' + str(len(resources)) + ' "' + file_name + '" \t\tSize: ' + str(online_size / 1024) + ' KB')
 
-			local_file = open(course_path + file_name, 'wb')
+			local_file = open(file_path, 'wb')
 			for block in file_req.iter_content(512):
 				if not block:
 					break

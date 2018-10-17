@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import os
 import urllib
 from getpass import getpass
-from progressbar import progressbar
+from tqdm import tqdm
 
 
 print('\n\nWe need to ask for you your LMS credentials to login into the LMS system as you so as to retrieve your courses:\n')
@@ -40,7 +40,7 @@ if login_history_length == 2:
 		course_soup = BeautifulSoup(course_data, 'html.parser')
 		resources = course_soup.find_all('li', class_='activity resource modtype_resource ')
 		count = 0
-		for resource in progressbar(resources[::-1]):
+		for resource in tqdm(resources[::-1]):
 			file_url = resource.find('div', class_='activityinstance').find('a')['href']
 			file_req = request_session.get(file_url, stream=True)
 			file_name = urllib.parse.unquote(file_req.url.split('/')[-1])

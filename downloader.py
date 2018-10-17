@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import os
 import urllib
 from getpass import getpass
+from progressbar import progressbar
 
 
 print('\n\nWe need to ask for you your LMS credentials to login into the LMS system as you so as to retrieve your courses:\n')
@@ -39,7 +40,7 @@ if login_history_length == 2:
 		course_soup = BeautifulSoup(course_data, 'html.parser')
 		resources = course_soup.find_all('li', class_='activity resource modtype_resource ')
 		count = 0
-		for resource in resources[::-1]:
+		for resource in progressbar(resources[::-1]):
 			file_url = resource.find('div', class_='activityinstance').find('a')['href']
 			file_req = request_session.get(file_url, stream=True)
 			file_name = urllib.parse.unquote(file_req.url.split('/')[-1])
@@ -47,16 +48,13 @@ if login_history_length == 2:
 				online_size = int(file_req.headers['Content-Length'])
 			except:
 				count += 1
-				print('File ' + str(count) + ' not downloadable, skipping...')
 				continue
 			file_path = os.path.join(course_path, file_name)
 			if os.path.exists(file_path):
 				local_size = os.path.getsize(file_path)
 				if online_size == local_size:
-					print('File ' + str(count + 1) + ' of ' + str(len(resources)) + ' "' + file_name + '" already exists, skipping...')
 					count += 1
 					continue
-			print('\nDownloading File ' + str(count + 1) + ' of ' + str(len(resources)) + ' "' + file_name + '" \t\tSize: ' + str(online_size / 1024) + ' KB')
 
 			local_file = open(file_path, 'wb')
 			for block in file_req.iter_content(512):

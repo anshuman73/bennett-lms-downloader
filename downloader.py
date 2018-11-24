@@ -41,28 +41,33 @@ if login_history_length == 2:
 		resources = course_soup.find_all('li', class_='activity resource modtype_resource ')
 		count = 0
 		for resource in tqdm(resources[::-1]):
-			file_url = resource.find('div', class_='activityinstance').find('a')['href']
-			file_req = request_session.get(file_url, stream=True)
-			file_name = urllib.parse.unquote(file_req.url.split('/')[-1])
 			try:
-				online_size = int(file_req.headers['Content-Length'])
-			except:
-				count += 1
-				continue
-			file_path = os.path.join(course_path, file_name)
-			if os.path.exists(file_path):
-				local_size = os.path.getsize(file_path)
-				if online_size == local_size:
+				file_url = resource.find('div', class_='activityinstance').find('a')['href']
+				file_req = request_session.get(file_url, stream=True)
+				file_name = urllib.parse.unquote(file_req.url.split('/')[-1])
+				try:
+					online_size = int(file_req.headers['Content-Length'])
+				except:
 					count += 1
 					continue
+				file_path = os.path.join(course_path, file_name)
+				if os.path.exists(file_path):
+					local_size = os.path.getsize(file_path)
+					if online_size == local_size:
+						count += 1
+						continue
 
-			local_file = open(file_path, 'wb')
-			for block in file_req.iter_content(512):
-				if not block:
-					break
-				local_file.write(block)
+				local_file = open(file_path, 'wb')
+				for block in file_req.iter_content(512):
+					if not block:
+						break
+					local_file.write(block)
 
-			count += 1
+				count += 1
+			except Exception as e:
+				print(str(r))
+				with open("logs.txt","a+") as file:
+					file.write(str(e)+"\n")			
 
 	print('\n\n\nAll Done\n\nKeep studying !')
 

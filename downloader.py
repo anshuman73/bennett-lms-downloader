@@ -44,6 +44,8 @@ if login_history_length == 2:
 			file_url = resource.find('div', class_='activityinstance').find('a')['href']
 			file_req = request_session.get(file_url, stream=True)
 			file_name = urllib.parse.unquote(file_req.url.split('/')[-1])
+			if (file_name.find('?')!= -1):
+				file_name = file_name.split("?")[0]
 			try:
 				online_size = int(file_req.headers['Content-Length'])
 			except:

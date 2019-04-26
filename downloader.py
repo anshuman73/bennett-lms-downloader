@@ -13,6 +13,11 @@ print('\n\nWe need to ask for you your LMS credentials to login into the LMS sys
 username = input('Enter your bennett username: ')
 password = getpass('Enter your bennett password: ')
 
+datetime_object = datetime.datetime.now()
+with open("logs.txt","a+") as file:
+	file.write("\n"+datetime_object+"\tBeginning run"+"\n")			
+
+
 request_session = requests.Session()
 login_request = request_session.post('http://lms.bennett.edu.in/login/index.php?authldap_skipntlmsso=1', data={'username': username, 'password': password, 'submit': ''})
 login_history = login_request.history

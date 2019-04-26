@@ -3,3 +3,4 @@ Please report errors at "https://github.com/anshuman73/bennett-lms-downloader"
 
 [Errno 22] Invalid argument: 'E:\\bennett-lms-downloader-\\Bennett LMS Data\\ECSE103L Computational Thinking and Programming\\TrustRed.rar?forcedownload=1'
 [Errno 22] Invalid argument: 'E:\\bennett-lms-downloader-\\Bennett LMS Data\\ECSE103L Computational Thinking and Programming\\NatLang.rar?forcedownload=1'
+2019-04-26 21:04:45.435113	Beginning run

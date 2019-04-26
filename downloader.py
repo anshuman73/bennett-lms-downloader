@@ -7,15 +7,13 @@ from tqdm import tqdm
 
 import datetime
 
-
-
 print('\n\nWe need to ask for you your LMS credentials to login into the LMS system as you so as to retrieve your courses:\n')
 username = input('Enter your bennett username: ')
 password = getpass('Enter your bennett password: ')
 
-datetime_object = datetime.datetime.now()
 with open("logs.txt","a+") as file:
-	file.write("\n"+datetime_object+"\tBeginning run"+"\n")			
+	datetime_object = datetime.datetime.now()
+	file.write("\n"+str(datetime_object)+"\tBeginning run"+"\n")			
 
 
 request_session = requests.Session()
@@ -79,7 +77,7 @@ if login_history_length == 2:
 				print(datetime_object)
 				print(str(e))
 				with open("logs.txt","a+") as file:
-					file.write(datetime_object+"\t"+str(e)+"\n")			
+					file.write(str(datetime_object)+"\n"+str(e)+"\n")			
 
 	print('\n\n\nAll Done\n\nKeep studying !')
 

@@ -5,6 +5,9 @@ import urllib
 from getpass import getpass
 from tqdm import tqdm
 
+import datetime
+
+
 
 print('\n\nWe need to ask for you your LMS credentials to login into the LMS system as you so as to retrieve your courses:\n')
 username = input('Enter your bennett username: ')
@@ -67,9 +70,11 @@ if login_history_length == 2:
 
 				count += 1
 			except Exception as e:
+				datetime_object = datetime.datetime.now()
+				print(datetime_object)
 				print(str(e))
 				with open("logs.txt","a+") as file:
-					file.write(str(e)+"\n")			
+					file.write(datetime_object+"\t"+str(e)+"\n")			
 
 	print('\n\n\nAll Done\n\nKeep studying !')
 

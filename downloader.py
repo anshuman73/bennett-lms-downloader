@@ -13,7 +13,7 @@ password = getpass('Enter your bennett password: ')
 
 with open("logs.txt","a+") as file:
 	datetime_object = datetime.datetime.now()
-	file.write("\n"+str(datetime_object)+"\tBeginning run"+"\n")			
+	file.write("\n\n"+str(datetime_object)+"\tBeginning run"+"\n")			
 
 
 request_session = requests.Session()

@@ -27,7 +27,7 @@ if login_history_length == 2:
 	courses = {}
 
 	for course in raw_courses:
-		course_meta_data = course.find_all('h4', class_='media-heading')[0]
+		course_meta_data = course.find_all('h4', class_='media-heading')[0]		
 		courses[course_meta_data.find('a').text.strip()] = courses.get(course_meta_data.find('a').text.strip(), course_meta_data.find('a')['href'].strip())
 
 	for course_name, course_link in courses.items():
@@ -38,7 +38,7 @@ if login_history_length == 2:
 
 		course_data = request_session.get(course_link).content
 		course_soup = BeautifulSoup(course_data, 'html.parser')
-		resources = course_soup.find_all('li', class_='activity resource modtype_resource ')
+		resources = course_soup.find_all('li', class_='activity assign modtype_assign')
 		count = 0
 		for resource in tqdm(resources[::-1]):
 			file_url = resource.find('div', class_='activityinstance').find('a')['href']

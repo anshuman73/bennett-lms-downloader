@@ -42,7 +42,7 @@ if login_history_length == 2:
 		if not os.path.exists(course_path):
 			os.makedirs(course_path)
 
-		course_data = request_session.get(course_link).content
+		course_data = request_session.get(course_link, verify=False).content
 		course_soup = BeautifulSoup(course_data, 'html.parser')
 		resources = course_soup.find_all('li', class_='activity resource modtype_resource')
 		count = 0

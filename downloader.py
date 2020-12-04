@@ -17,7 +17,7 @@ with open("logs.txt","a+") as file:
 
 
 request_session = requests.Session()
-login_request = request_session.post('http://lms.bennett.edu.in/login/index.php?authldap_skipntlmsso=1', data={'username': username, 'password': password, 'submit': ''})
+login_request = request_session.post('https://lms.bennett.edu.in/login/index.php?authldap_skipntlmsso=1', data={'username': username, 'password': password, 'submit': ''}, verify=False)
 login_history = login_request.history
 login_history_length = len(login_history)
 
@@ -25,7 +25,7 @@ if login_history_length == 2:
 	local_path = os.path.join(os.getcwd(), 'Bennett LMS Data')
 	if not os.path.exists(local_path):
 		os.makedirs(local_path)
-	r = request_session.get('http://lms.bennett.edu.in/my/')
+	r = request_session.get('https://lms.bennett.edu.in/my/')
 
 	soup = BeautifulSoup(r.content, 'html.parser')
 
@@ -44,7 +44,7 @@ if login_history_length == 2:
 
 		course_data = request_session.get(course_link).content
 		course_soup = BeautifulSoup(course_data, 'html.parser')
-		resources = course_soup.find_all('li', class_='activity resource modtype_resource ')
+		resources = course_soup.find_all('li', class_='activity resource modtype_resource')
 		count = 0
 		for resource in tqdm(resources[::-1]):
 			try:
